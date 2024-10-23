@@ -1,10 +1,12 @@
 class Solution {
     public int solution(String t, String p) {
         int answer = 0;
-        int sublen = p.length();
-        for(int i=0;i<t.length()-sublen+1;i++){
-            if(Long.parseLong(p)>=Long.parseLong(t.substring(i,i+sublen)))
-                answer+=1;
+        // 8 1 =  8
+        // 8 3 = 6
+        // 8 8 = 1
+        for(int i=0;i<t.length()-p.length()+1;i++){
+            if(Long.valueOf(t.substring(i,i+p.length()))<=Long.valueOf(p))
+                answer++;
         }
         return answer;
     }
