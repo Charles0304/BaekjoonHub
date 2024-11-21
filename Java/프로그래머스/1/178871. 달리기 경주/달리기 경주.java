@@ -1,20 +1,19 @@
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.*;
 class Solution {
     public String[] solution(String[] players, String[] callings) {
+        String[] answer = {};
         Map<String,Integer> map = new HashMap<>();
-        for(int i=0;i<players.length;i++) {
-        	map.put(players[i],i);
+        
+        for(int i=0;i<players.length;i++){
+            map.put(players[i],i);
         }
-        for(int i=0;i<callings.length;i++) {
-        	int idx = map.get(callings[i]);
-        	map.replace(players[idx], idx-1);
-        	map.replace(players[idx-1], idx);
-        	
-        	String tmp = players[idx];
-        	players[idx] = players[idx-1];
-        	players[idx-1] = tmp;
+        
+        for(String player:callings){
+            int n = map.get(player);
+            players[n]=players[n-1];
+            players[n-1]=player;
+            map.put(player,n-1);
+            map.put(players[n],n);
         }
         
         return players;
