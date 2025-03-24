@@ -1,0 +1,38 @@
+import java.io.*;
+
+public class Main {
+    static int[][] mem;
+
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int n = Integer.parseInt(br.readLine());
+        mem = new int [2][n];
+        int[] input = new int[n];
+        for(int i=0;i<n;i++){
+            input[i] = Integer.parseInt(br.readLine());
+        }
+        mem[0][0] = input[0];
+        mem[1][0] = input[0];
+        int answer = mem[0][0];
+        if(n>1) {
+            mem[0][1] = input[1];
+            mem[1][1] = input[0] + input[1];
+
+            for (int i = 2; i < n; i++) {
+                mem[0][i] = Math.max(mem[1][i - 2],mem[0][i - 2]) + input[i];
+                mem[1][i] = Math.max(mem[0][i - 1] + input[i],mem[1][i-1]);
+            }
+
+            for (int i = 0; i < 2; i++) {
+                for (int j = n - 2; j < n; j++) {
+                    answer = Math.max(answer, mem[i][j]);
+                }
+            }
+        }
+        bw.write(answer+"");
+        bw.flush();
+    }
+}
